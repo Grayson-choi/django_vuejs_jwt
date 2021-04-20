@@ -19,6 +19,9 @@
         <img v-bind:src="myImage" alt="my-image">
         <img :src="myImage" alt="my-image">
         <hr>
+        <li v-for="todo in todos" :class="{ complete: todo.isCompleted}">
+            {{ todo }}
+          </li>
     </div>
 
 
@@ -30,9 +33,12 @@
                 myMessage: `이 페이지는 ${new Date()}에 로드 되었습니다.`,
                 myUrl: 'https://google.com',
                 myImage: 'https://picsum.photos/200/300',
-
-
+                todos: [
+                          { id: 1, title: 'todo 1', isCompleted: true },
+                          { id: 2, title: 'todo 2', isCompleted: false },
+                        ],
             }
+
         })
     </script>
 </body>
