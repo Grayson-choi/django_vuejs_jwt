@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10. Vue computed & watch</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div>
+      <h2>Methods vs Computed</h2>
+​
+      <button v-on:click="visible = !visible">Toggle</button>
+      <input type="text" v-model="changeText">
+      <ul v-if="visible">
+        <li>dateMethod: {{ dateMethod() }}</li>
+        <li>dateComputed: {{ dateComputed }}</li>
+      </ul>
+​
+    </div>
+​
+    <hr>
+    <h2>Computed vs Watch</h2>
+    <p>a: {{ a }}</p>
+    <p>Computed: a의 제곱은 {{ square }} 입니다.</p>
+    <p>Watch: 이전값{{ oldValue}} 이고 변경된 값은 {{ newValue}} <br> 변화정도는 {{ increase }} 입니다.</p>
+    delta 값: <input v-model.number="delta" type="number">
+    <button @click="a = a + delta">a 증가</button>
+​
+    <hr>
+​
+​
+​
+  </div>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        visible: true,
+        a: 0,
+        delta: 0,
+        increase: 0,
+        oldValue: 0,
+        newValue: 0,
+        changeText: '',
+      },
+      methods: {
+        dateMethod: function() {
+          return new Date() + this.changeText
+          // return new Date() +' ' + this.name
+        }
+      },
+      computed: {
+        square: function () {
+          console.log('Computed!');
+					// computed: (data 자체를 변화시키지 않고) 계산된 값을 return
+          return this.a**2
+        },
+        dateComputed: function(){
+          return new Date() + this.changeText// 오늘 날짜 시간에 대한 정보를 리턴.
+          // return new Date() +' ' + this.name
+        }
+      },
+      watch: {
+        a: function (newValue, oldValue) {
+          console.log('Watch!', newValue, oldValue)
+					// watch: a 라는 특정 데이터의 변화에 따라 다른 데이터가 변화
+          this.oldValue = oldValue
+          this.newValue = newValue
+          this.increase = newValue - oldValue
+        },
+      },
+    })
+  </script>
+</body>
+</html>
